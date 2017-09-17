@@ -5,6 +5,14 @@
   margin-top: 0px;
   margin-bottom: 0px; }
 
+.nomarginTop {
+  margin-top: 0px;
+}
+
+.nomarginBot {
+  margin-bottom: 0px;
+}
+
 .nopad {
   padding-top: 0px;
   padding-bottom: 0px; }
@@ -67,4 +75,10 @@
   font-weight: normal; }
 
 .colWidth95 {
-  width: 95%; }
+  width: 95%;
+}
+
+.liststyling {
+  list-style-type: square;
+  margin-top: 2px;
+}
