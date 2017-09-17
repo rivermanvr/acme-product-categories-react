@@ -44,7 +44,7 @@ export default (props) => {
           <li className="list-group-item">There are { products.length } products.</li>
           <li className="list-group-item">
               The most expensive product is <strong>{ productHighPrice.name } </strong>
-              at a price of $ <strong>{ productHighPrice.price } </strong>US dollars.
+              at a price of <strong>${ productHighPrice.price } </strong>US.
           </li>
           <li className="list-group-item">Products not in stock: <strong>{ productsNotStocked }</strong></li>
         </ul>
