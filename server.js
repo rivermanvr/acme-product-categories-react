@@ -61,18 +61,18 @@ Category.hasMany(Product);
 conn.sync({ force: true })
   .then(()=> {
     return Promise.all([
-      Product.create({ name: 'foo', price: 10 }),
-      Product.create({ name: 'foo 2', price: 20 }),
-      Product.create({ name: 'bar', inStock: false }),
-      Product.create({ name: 'bazz', inStock: false }),
-      Category.create({ name: 'Foo Category' }),
-      Category.create({ name: 'Bar Category' }),
-      Category.create({ name: 'Bazz Category' })
+      Product.create({ name: 'Gibson', price: 2500 }),
+      Product.create({ name: 'Redgate', price: 20000 }),
+      Product.create({ name: 'Baldwin', inStock: false }),
+      Product.create({ name: 'Korg', inStock: false }),
+      Category.create({ name: 'Guitars' }),
+      Category.create({ name: 'Pianos' }),
+      Category.create({ name: 'Amplifiers' })
     ])
-    .then(([foo, foo2, bar,  bazz, fooCategory, barCategory]) => {
+    .then(([gibson, redgate, baldwin,  korg, guitars, pianos]) => {
       return Promise.all([
-        fooCategory.addProducts([ foo, foo2 ]),
-        barCategory.addProduct(bar)
+        guitars.addProducts([ gibson, redgate ]),
+        pianos.addProduct([baldwin, korg])
       ]);
     });
   })
