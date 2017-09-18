@@ -28,19 +28,6 @@ class AppContainer extends Component {
       .then(categories => this.setState({ categories, showErrorNmUnique: false, showErrorNmBlk: false }))
   }
 
-  componentWillReceiveProps (nextProps) {
-    // const currentProps = this.props;
-    // const productsCurr = currentProps.state.products;
-    // const productsNext = nextProps.state.products;
-
-    // if (productsNext.length !== productsCurr.length) this.resetState();
-    
-    //-----  ------ ------ ------
-    console.log(currentProps, '<---current props - index')
-    console.log('next props - index: ', nextProps);
-    //-----  ------ ------ ------
-  }
-
 //on all the following: .catch.... showErrorXXX: true
 
   onProductChanges (prodObj) {
