@@ -14,7 +14,7 @@ export default class ProductList extends Component {
 
     return (
       <div className="row">
-        <div className="well colWidth175p col-md-2 backWhite tabtoright">
+        <div className="well colWidth175p col-md-2 backWhite marginLandR">
           <div><h5>Name:</h5></div>
           <div>{ products[0].name }</div>
           <div>Price</div>
@@ -27,19 +27,19 @@ export default class ProductList extends Component {
           <div><button className="btn btn-danger">Delete</button></div>
         </div>
 
-        <div className="well colWidth175p col-md-2 backWhite">
+        <div className="well colWidth175p col-md-2 backWhite marginLandR">
           testing 1
         </div>
-        <div className="well colWidth175p col-md-2 backWhite">
+        <div className="well colWidth175p col-md-2 backWhite marginLandR">
           testing 2
         </div>
-        <div className="well colWidth175p col-md-2 backWhite">
+        <div className="well colWidth175p col-md-2 backWhite marginLandR">
           testing 3
         </div>
-        <div className="well colWidth175p col-md-2 backWhite">
+        <div className="well colWidth175p col-md-2 backWhite marginLandR">
           testing 4
         </div>
-        <div className="well colWidth175p col-md-2 backWhite">
+        <div className="well colWidth175p col-md-2 backWhite marginLandR">
           testing 5
         </div>
       </div>
