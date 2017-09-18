@@ -67,8 +67,7 @@ export default class ProductForm extends Component {
   }
 
   onChangeCategory (event) {
-    const categoryId = (event.target.value) ? event.target.value : null;
-    this.setState({ categoryId });
+    this.setState({ categoryId: event.target.value });
   }
 
   render (){

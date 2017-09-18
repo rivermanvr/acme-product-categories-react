@@ -14,7 +14,7 @@ export default class ProductList extends Component {
 
     return (
       <div className="row">
-        <div className="well colWidth175p col-md-2 backWhite">
+        <div className="well colWidth175p col-md-2 backWhite tabtoright">
           <div><h5>Name:</h5></div>
           <div>{ products[0].name }</div>
           <div>Price</div>
