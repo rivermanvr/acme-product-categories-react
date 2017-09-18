@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 
 export default class ProductSummary extends Component {
-  constructor () {
-    super()
-    this.state = { forceRender: '' };
+  // constructor () {
+  //   super()
+  //   this.state = { forceRender: '' };
 
-    this.resetState = this.resetState.bind(this);
-  }
+  //   this.resetState = this.resetState.bind(this);
+  // }
 
-  resetState () {
-    this.setState({ forceRender: 'render' })
-  }
+  // resetState () {
+  //   this.setState({ forceRender: 'render' })
+  // }
   
-  componentWillReceiveProps (nextProps) {
-    const currentProps = this.props;
-    const productsCurr = currentProps.state.products;
-    const productsNext = nextProps.state.products;
+  // componentWillReceiveProps (nextProps) {
+  //   const currentProps = this.props;
+  //   const productsCurr = currentProps.state.products;
+  //   const productsNext = nextProps.state.products;
 
-    if (productsNext.length !== productsCurr.length) this.resetState();
-  }
+  //   if (productsNext.length !== productsCurr.length) this.resetState();
+  // }
   
   render () {
     const products = this.props.state.products;

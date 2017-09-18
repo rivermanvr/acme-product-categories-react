@@ -127,7 +127,7 @@ export default class ProductForm extends Component {
               {
                 categoriesSelect.map(category => {
                   return <option key={ category.id } value={ category.id }>{ category.name }</option>
-                })  
+                })
               }
             </select>
             <button className="btn btn-primary margintop" type="submit">Add Product</button>
