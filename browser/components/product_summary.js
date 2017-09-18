@@ -18,12 +18,8 @@ export default class ProductSummary extends Component {
     const productsNext = nextProps.state.products;
 
     if (productsNext.length !== productsCurr.length) this.resetState();
-    
-    //-----  ------ ------ ------
-    console.log(currentProps, '<---current propsxxxxxxx')
-    console.log('next propsxxxxxx: ', nextProps);
-    //-----  ------ ------ ------
   }
+  
   render () {
     const products = this.props.state.products;
     const categories = this.props.state.categories;

@@ -42,11 +42,9 @@ export default class ProductForm extends Component {
     const showErrorNmUniqueCurr = currentProps.state.showErrorNmUnique;
     const showErrorNmUniqueNext = nextProps.state.showErrorNmUnique;
     //-----  ------ ------ ------
-    console.log(currentProps, '<---current props')
-    console.log('next props: ', nextProps);
-    //-----  ------ ------ ------
     if (showErrorNmBlkNext !== showErrorNmBlkCurr && showErrorNmBlkNext === false) this.resetState();
     else if (showErrorNmUniqueNext !== showErrorNmUniqueCurr && showErrorNmUniqueNext === false) this.resetState();
+    else if (nextProps.state.products.length !== currentProps.state.products.length) this.resetState();
   }
 
   handleSubmit (event) {
@@ -58,23 +56,19 @@ export default class ProductForm extends Component {
 
   onChangeName (event) {
     this.setState({ name: event.target.value });
-    console.log(event.target.value)
   }
 
   onChangePrice (event) {
     this.setState({ price: event.target.value });
-    console.log(event.target.value)
   }
 
   onChangeInStock (event) {
     this.setState({ inStock: event.target.checked });
-    console.log(event.target.checked)
   }
 
   onChangeCategory (event) {
     const categoryId = (event.target.value) ? event.target.value : null;
     this.setState({ categoryId });
-    console.log(categoryId)
   }
 
   render (){

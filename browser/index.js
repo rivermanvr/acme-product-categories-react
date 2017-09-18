@@ -22,10 +22,11 @@ class AppContainer extends Component {
   }
 
   componentDidMount () {
-    this.fetchAll('/api/products')
-      .then(products => this.setState({ products }))
-      .then(() => this.fetchAll('/api/categories'))
-      .then(categories => this.setState({ categories, showErrorNmUnique: false, showErrorNmBlk: false }))
+    Promise.all([
+      this.fetchAll('/api/products'),
+      this.fetchAll('/api/categories')
+    ])
+      .then(([products, categories]) => this.setState({ products, categories, showErrorNmUnique: false, showErrorNmBlk: false }))
   }
 
 //on all the following: .catch.... showErrorXXX: true
@@ -39,11 +40,15 @@ class AppContainer extends Component {
   }
 
   onProductAdd (prodObj) {
-    console.log(prodObj)
     prodObj.categoryId = (prodObj.categoryId !== '0') ? prodObj.categoryId : null;
     this.setState({ showErrorNmUnique: false, showErrorNmBlk: false });
     if (prodObj.name !== '') {
       axios.post('/api/products', prodObj)
+        .then(() => Promise.all([
+          this.fetchAll('/api/products'),
+          this.fetchAll('/api/categories')
+        ]))
+        .then(([products, categories]) => this.setState({ products, categories, showErrorNmUnique: false, showErrorNmBlk: false }))
         .catch(() => this.setState({ showErrorNmUnique: true }))
     } else {
       this.setState({ showErrorNmBlk: true })
