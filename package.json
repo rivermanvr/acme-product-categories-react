@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "postinstall": "npm run webpack",
+    "webpack": "./node_modules/webpack/bin/webpack.js",
     "start": "node server.js",
     "start:dev": "webpack -w & nodemon -e html,js,css  -i dist/ -i src/ server.js",
     "build:css": "node-sass -w -r css/scss -o css"
