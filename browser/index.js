@@ -81,7 +81,28 @@ class AppContainer extends Component {
   }
 
   onProductDelete (productId) {
-    console.log('onProductDelete - ', productId);
+    axios.delete(`/api/products/${ productId }`)
+      .then(() => Promise.all([
+        this.fetchAll('/api/products'),
+        this.fetchAll('/api/categories')
+      ]))
+      .then(([products, categories]) => this.setState({
+        products,
+        categories,
+        errorObj: {
+          showError: false, showErrorNmBlk: false, errorMsg: '',
+          parentId: '', productId: ''
+        }
+      }))
+      .catch((err) => {
+        this.setState({
+          errorObj: {
+            showError: true, showErrorNmBlk: false,
+            errorMsg: err.response.data.errors[0].message,
+            parentId: 'index', productId: ''
+          }
+        })
+      })
   }
 
   onProductAdd (prodObj) {

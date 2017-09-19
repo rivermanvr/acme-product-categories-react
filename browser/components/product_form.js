@@ -120,7 +120,10 @@ export default class ProductForm extends Component {
       variableJSXButton = (<button className="btn btn-primary margintop" type="submit">Add Product</button>);
     } else if (this.props.parentForm === 'list') {
       variableJSXButton = (<button className="btn btn-primary margintop colWidth150p" type="submit">Save</button>);
-      variableJSXButton2 = (<button className="btn btn-danger margintop colWidth150p" type="submit">Delete</button>);
+      variableJSXButton2 = (
+        <button className="btn btn-danger margintop colWidth150p" onClick={ () => this.props.onDelete(product.id) }>
+          Delete
+        </button>);
     }
     
     return (
