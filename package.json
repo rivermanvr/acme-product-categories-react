@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "postinstall": "webpack",
+    "postinstall": "npm run webpack",
     "start": "node server.js",
     "start:dev": "webpack -w & nodemon -e html,js,css  -i dist/ -i src/ server.js",
     "build:css": "node-sass -w -r css/scss -o css"
