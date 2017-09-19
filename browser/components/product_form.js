@@ -56,8 +56,7 @@ export default class ProductForm extends Component {
     const showErrorCurr = currentProps.state.errorObj.showError;
     const showErrorNext = nextProps.state.errorObj.showError;
     //-----  ------ ------ ------
-
-    if (showErrorNmBlkNext !== showErrorNmBlkCurr && showErrorNmBlkNext === false && showErrorNext === false) this.resetState(this.props.parentForm);
+    if ((showErrorNmBlkNext !== showErrorNmBlkCurr || showErrorCurr !== showErrorNext) && showErrorNmBlkNext === false && showErrorNext === false) this.resetState(this.props.parentForm);
     else if (nextProps.state.products.length !== currentProps.state.products.length) this.resetState(this.props.parentForm);
   }
 
