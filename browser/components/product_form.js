@@ -4,6 +4,7 @@ export default class ProductForm extends Component {
   constructor () {
     super();
     this.state = {
+      id: '',
       name: '',
       price: '',
       inStock: false,
@@ -18,40 +19,57 @@ export default class ProductForm extends Component {
     this.resetState = this.resetState.bind(this);
   }
 
-  resetState () {
-    this.setState({
-      name: '',
-      price: '',
-      inStock: false,
-      categoryId: '0'
-    })
+  resetState (parentForm) {
+    if (parentForm === 'index') {
+      this.setState({
+        id: '',
+        name: '',
+        price: '',
+        inStock: false,
+        categoryId: '0'
+      })
+    } else {
+      const product = this.props.product;
+      if (!product.categoryId) product.categoryId = '0';
+      this.setState({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        inStock: product.inStock,
+        categoryId: product.categoryId
+      })
+    }
   }
 
   componentDidMount () {
-    const appState = this.props.state;
-    if (!appState.showErrorNmBlk && !appState.showErrorNmUnique) {
-      this.resetState();
+    const appState = this.props.state.errorObj;
+    if (!appState.showErrorNmBlk && !appState.showError) {
+      this.resetState(this.props.parentForm);
     }
   }
 
   componentWillReceiveProps (nextProps) {
     const currentProps = this.props;
     //error handling props (current & next)
-    const showErrorNmBlkCurr = currentProps.state.showErrorNmBlk;
-    const showErrorNmBlkNext = nextProps.state.showErrorNmBlk;
-    const showErrorNmUniqueCurr = currentProps.state.showErrorNmUnique;
-    const showErrorNmUniqueNext = nextProps.state.showErrorNmUnique;
+    const showErrorNmBlkCurr = currentProps.state.errorObj.showErrorNmBlk;
+    const showErrorNmBlkNext = nextProps.state.errorObj.showErrorNmBlk;
+    const showErrorCurr = currentProps.state.errorObj.showError;
+    const showErrorNext = nextProps.state.errorObj.showError;
     //-----  ------ ------ ------
-    if (showErrorNmBlkNext !== showErrorNmBlkCurr && showErrorNmBlkNext === false) this.resetState();
-    else if (showErrorNmUniqueNext !== showErrorNmUniqueCurr && showErrorNmUniqueNext === false) this.resetState();
-    else if (nextProps.state.products.length !== currentProps.state.products.length) this.resetState();
+
+    if (showErrorNmBlkNext !== showErrorNmBlkCurr && showErrorNmBlkNext === false && showErrorNext === false) this.resetState(this.props.parentForm);
+    else if (nextProps.state.products.length !== currentProps.state.products.length) this.resetState(this.props.parentForm);
   }
 
   handleSubmit (event) {
     event.preventDefault();
     const newProduct = this.state;
     newProduct.price = newProduct.price * 1;
-    this.props.onAdd(newProduct)
+    if (this.props.parentForm === 'index') {
+      this.props.onAdd(newProduct);
+    } else if (this.props.parentForm === 'list') {
+      this.props.onChanges(newProduct);
+    }
   }
 
   onChangeName (event) {
@@ -72,25 +90,44 @@ export default class ProductForm extends Component {
 
   render (){
     const categories = this.props.state.categories;
-    const none = [{ id: 0, name: '--none--' }];
+    const none = [{ id: '0', name: '--none--' }];
     const categoriesSelect = none.concat(categories);
+    const product = this.state;
+    const optionSelected = product.categoryId;
 
-    //error handling:
-
-    const showErrorNmUnique = this.props.state.showErrorNmUnique;
-    const showErrorNmBlk = this.props.state.showErrorNmBlk;
-    const errorStyleNmUnique = showErrorNmUnique ? 'panel-body center bg-danger show' : 'panel-body center bg-danger hidden';
-    const errorStyleNmBlk = showErrorNmBlk ? 'panel-body center bg-danger show' : 'panel-body center bg-danger hidden';
-  
     if (!categories.length) return <div></div>;
+
+    //error handling assorted errors:
+
+    const errorObj = this.props.state.errorObj;
+    const showError = errorObj.showError;
+    const showErrorNmBlk = errorObj.showErrorNmBlk;
+    const errorMsg = errorObj.errorMsg;
+    const productId = errorObj.productId;
+    const parentId = errorObj.parentId;
+
+    const showErrorTrue = showError && this.props.parentForm === parentId && product.id === productId;
+    const showErrorNmBlkTrue = showErrorNmBlk && this.props.parentForm === parentId && product.id === productId;
+
+    const errorStyle = showErrorTrue ? 'panel-body center bg-danger show' : 'panel-body center bg-danger hidden';
+    const errorStyleNmBlk = showErrorNmBlkTrue ? 'panel-body center bg-danger show' : 'panel-body center bg-danger hidden';
+
+    //create some JSX for add a product component or for the product_list component
+
+    let variableJSXHead, variableJSXButton, variableJSXButton2;
+    if (this.props.parentForm === 'index') {
+      variableJSXHead = (<div className="panel-heading">Add a Product</div>);
+      variableJSXButton = (<button className="btn btn-primary margintop" type="submit">Add Product</button>);
+    } else if (this.props.parentForm === 'list') {
+      variableJSXButton = (<button className="btn btn-primary margintop colWidth150p" type="submit">Save</button>);
+      variableJSXButton2 = (<button className="btn btn-danger margintop colWidth150p" type="submit">Delete</button>);
+    }
     
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">
-          Add a Product
-        </div>
-        <div className={ errorStyleNmUnique }>
-            <strong>Name must be unique</strong>
+        { variableJSXHead }
+        <div className={ errorStyle }>
+            <strong>{ errorMsg }</strong>
         </div>
         <div className={ errorStyleNmBlk }>
             <strong>Name cannot be blank</strong>
@@ -123,6 +160,7 @@ export default class ProductForm extends Component {
               onChange={ this.onChangeCategory }
               className="form-control"
               type="text"
+              value={ optionSelected }
             >
               {
                 categoriesSelect.map(category => {
@@ -130,8 +168,9 @@ export default class ProductForm extends Component {
                 })
               }
             </select>
-            <button className="btn btn-primary margintop" type="submit">Add Product</button>
+            { variableJSXButton }
           </form>
+          { variableJSXButton2 }
         </div>
       </div>
     )
